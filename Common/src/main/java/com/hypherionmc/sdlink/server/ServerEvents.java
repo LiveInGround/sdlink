@@ -45,6 +45,7 @@ import com.hypherionmc.sdlink.util.translations.Text;
 import io.github.joagar21.guilds.api.GuildsAPI;
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Member;
+import net.neoforged.bus.api.EventPriority;
 import shadow.kyori.adventure.text.Component;
 
 import java.util.Optional;
@@ -157,6 +158,10 @@ public final class ServerEvents {
 
     @CraterEventListener
     public void onServerChatEvent(CraterServerChatEvent event) {
+        if (event.wasCancelled()) {
+            return;
+        }
+
         if (!SDLinkMCPlatform.INSTANCE.playerIsActive(event.getPlayer())) {
             return;
         }
